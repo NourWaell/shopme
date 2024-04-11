@@ -1,8 +1,9 @@
 export type TProduct = {
   id: number;
   title: string;
-  cat_prefix: string;
+  price: number;
+  cat_prefix?: string;
   img: string;
-  price: string;
   quantity?: number;
+  max: number;
 };

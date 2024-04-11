@@ -13,7 +13,13 @@ import { useParams } from "react-router-dom";
 const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
   const { error, loading, records } = useAppSelector((state) => state.products);
+
+  const productsFullInfo = records.map((product) => ({
+    ...product,
+    quantity: cartItems[product.id] || 0,
+  }));
 
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
@@ -27,7 +33,7 @@ const Products = () => {
     <Container>
       <Loading status={loading} error={error}>
         <GridList
-          records={records}
+          records={productsFullInfo}
           renderItem={(record) => <Product {...record} />}
         />
       </Loading>

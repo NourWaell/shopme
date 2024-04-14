@@ -1,5 +1,6 @@
 import { MainLayout } from "@layouts/index";
 import AboutUs from "@pages/AboutUs";
+import Cart from "@pages/Cart";
 import Categories from "@pages/Categories";
 import Error from "@pages/Error";
 import Home from "@pages/Home";
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
       {
         path: "categories",

@@ -1,10 +1,10 @@
 import { TProduct } from "@customTypes/product";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
+import { memo, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 
 import styles from "./styles.module.css";
-import { memo, useEffect, useState } from "react";
 
 const { product, productImg, maximumNotice } = styles;
 

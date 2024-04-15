@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cart from "./cart/cartSlice";
 import categories from "./categories/categoriesSlice";
 import products from "./products/productsSlice";
+import wishlist from "./wishlist/wishlistSlice";
 import storage from "redux-persist/lib/storage";
 import {
   persistStore,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   categories,
   products,
   cart: persistReducer(cartPersistConfig, cart),
+  wishlist,
 });
 
 const store = configureStore({

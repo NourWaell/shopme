@@ -7,6 +7,7 @@ import { memo, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 
 import styles from "./styles.module.css";
+import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 
 const { product, productImg, maximumNotice, wishlistBtn } = styles;
 
@@ -32,9 +33,13 @@ const Product = memo(({ img, price, title, id, max, quantity }: TProduct) => {
     setIsBtnDisabled(true);
   };
 
+  const likeToggleHandler = () => {
+    dispatch(actLikeToggle(id));
+  };
+
   return (
     <div className={product}>
-      <div className={wishlistBtn}>
+      <div className={wishlistBtn} onClick={likeToggleHandler}>
         <Like />
       </div>
       <div className={productImg}>

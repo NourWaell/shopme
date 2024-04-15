@@ -36,6 +36,8 @@ const Product = memo(
     };
 
     const likeToggleHandler = () => {
+      if (isLoading) return;
+
       setIsLoading(true);
       dispatch(actLikeToggle(id))
         .unwrap()

@@ -21,7 +21,11 @@ const initialState: IWishlistState = {
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
-  reducers: {},
+  reducers: {
+    productsFullInfoCleanUp: (state) => {
+      state.productsFullInfo = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(actLikeToggle.pending, (state) => {
       state.error = null;
@@ -31,6 +35,9 @@ const wishlistSlice = createSlice({
         state.itemsId.push(action.payload.id);
       } else {
         state.itemsId = state.itemsId.filter((el) => el !== action.payload.id);
+        state.productsFullInfo = state.productsFullInfo.filter(
+          (el) => el.id !== action.payload.id
+        );
       }
     });
     builder.addCase(actLikeToggle.rejected, (state, action) => {
@@ -58,4 +65,5 @@ const wishlistSlice = createSlice({
 });
 
 export { actLikeToggle, actGetWishlist };
+export const { productsFullInfoCleanUp } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

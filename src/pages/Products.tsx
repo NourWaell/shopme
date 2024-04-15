@@ -13,11 +13,13 @@ const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
+  const wishlistItemsId = useAppSelector((state) => state.wishlist.itemsId);
   const { error, loading, records } = useAppSelector((state) => state.products);
 
   const productsFullInfo = records.map((product) => ({
     ...product,
-    quantity: cartItems[product.id] || 0,
+    quantity: cartItems[product.id],
+    isLiked: wishlistItemsId.includes(product.id),
   }));
 
   useEffect(() => {

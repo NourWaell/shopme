@@ -1,13 +1,13 @@
 import LikeFill from "@assets/svg/like-fill.svg?react";
 import Like from "@assets/svg/like.svg?react";
-import { TProduct } from "@customTypes/product";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
+import { actLikeToggle } from "@store/wishlist/wishlistSlice";
+import { TProduct } from "@types";
 import { memo, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 
 import styles from "./styles.module.css";
-import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 
 const { product, productImg, maximumNotice, wishlistBtn } = styles;
 

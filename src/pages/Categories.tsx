@@ -1,7 +1,7 @@
 import { Category } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { GridList, Heading } from "@components/shared";
-import { TCategory } from "@customTypes/category";
+import { TCategory } from "@types";
 import useCategories from "@hooks/useCategories";
 
 const Categories = () => {

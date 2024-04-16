@@ -1,38 +1,14 @@
 import { Product } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { GridList, Heading } from "@components/shared";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  actGetProductsByCatPrefix,
-  cleanupProductsRecords,
-} from "@store/products/productsSlice";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import useProducts from "@hooks/useProducts";
 
 const Products = () => {
-  const params = useParams();
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const wishlistItemsId = useAppSelector((state) => state.wishlist.itemsId);
-  const { error, loading, records } = useAppSelector((state) => state.products);
-
-  const productsFullInfo = records.map((product) => ({
-    ...product,
-    quantity: cartItems[product.id],
-    isLiked: wishlistItemsId.includes(product.id),
-  }));
-
-  useEffect(() => {
-    dispatch(actGetProductsByCatPrefix(params.prefix as string));
-
-    return () => {
-      dispatch(cleanupProductsRecords());
-    };
-  }, [dispatch, params]);
+  const { error, loading, productPrefix, productsFullInfo } = useProducts();
 
   return (
     <>
-      <Heading title={`${params.prefix?.toUpperCase()} Products`} />
+      <Heading title={`${productPrefix?.toUpperCase()} Products`} />
 
       <Loading status={loading} error={error}>
         <GridList

@@ -1,10 +1,10 @@
-import HeaderBasket from "./HeaderBasket/HeaderBasket";
-import Category from "./Category/Category";
-import Product from "./Product/Product";
 import CartItem from "./CartItem/CartItem";
-import CartSubtotal from "./CartSubtotal/CartSubtotal";
 import CartItemList from "./CartItemList/CartItemList";
+import CartSubtotal from "./CartSubtotal/CartSubtotal";
+import Category from "./Category/Category";
+import HeaderBasket from "./HeaderBasket/HeaderBasket";
 import HeaderWishlist from "./HeaderWishlist/HeaderWishlist";
+import Product from "./Product/Product";
 
 export {
   HeaderBasket,

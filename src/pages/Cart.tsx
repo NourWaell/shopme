@@ -1,12 +1,7 @@
 import { CartItemList, CartSubtotal } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { Heading } from "@components/shared";
-import {
-  actGetProductsByItem,
-  cartItemChangeQuantity,
-  cartItemRemove,
-  cleanupCartProductsFullInfo,
-} from "@store/cart/cartSlice";
+import { actGetProductsByItem, cartItemChangeQuantity, cartItemRemove, cleanupCartProductsFullInfo } from "@store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useCallback, useEffect } from "react";
 
@@ -45,7 +40,7 @@ const Cart = () => {
 
   return (
     <>
-      <Heading>Your Cart</Heading>
+      <Heading title="Your Cart" />
       <Loading status={loading} error={error}>
         {products.length ? (
           <>

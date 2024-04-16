@@ -2,7 +2,10 @@ import { Product } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { GridList, Heading } from "@components/shared";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { actGetProductsByCatPrefix, cleanupProductsRecords } from "@store/products/productsSlice";
+import {
+  actGetProductsByCatPrefix,
+  cleanupProductsRecords,
+} from "@store/products/productsSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -29,9 +32,8 @@ const Products = () => {
 
   return (
     <>
-      <Heading>
-        <span className="text-capitalize">{params.prefix}</span> Products
-      </Heading>
+      <Heading title={`${params.prefix?.toUpperCase()} Products`} />
+
       <Loading status={loading} error={error}>
         <GridList
           records={productsFullInfo}

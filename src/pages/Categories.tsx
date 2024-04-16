@@ -2,7 +2,10 @@ import { Category } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { GridList, Heading } from "@components/shared";
 import { TCategory } from "@customTypes/category";
-import { actGetCategories, cleanupCategoriesRecords } from "@store/categories/categoriesSlice";
+import {
+  actGetCategories,
+  cleanupCategoriesRecords,
+} from "@store/categories/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useEffect } from "react";
 
@@ -22,7 +25,7 @@ const Categories = () => {
 
   return (
     <>
-      <Heading>Categories</Heading>
+      <Heading title="Categories" />
       <Loading status={loading} error={error}>
         <GridList<TCategory>
           records={records}

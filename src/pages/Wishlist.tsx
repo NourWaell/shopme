@@ -3,7 +3,10 @@ import { Loading } from "@components/feedback";
 import { GridList, Heading } from "@components/shared";
 import { TProduct } from "@customTypes/product";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { actGetWishlist, cleanupWishlistProductsFullInfo } from "@store/wishlist/wishlistSlice";
+import {
+  actGetWishlist,
+  cleanupWishlistProductsFullInfo,
+} from "@store/wishlist/wishlistSlice";
 import { useEffect } from "react";
 
 const Wishlist = () => {
@@ -30,7 +33,7 @@ const Wishlist = () => {
 
   return (
     <>
-      <Heading>Your Wishlist</Heading>
+      <Heading title="Your Wishlist" />
       <Loading status={loading} error={error}>
         <GridList<TProduct>
           records={records}

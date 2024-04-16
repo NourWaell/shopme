@@ -1,7 +1,4 @@
-import {
-  actGetCategories,
-  cleanupCategoriesRecords,
-} from "@store/categories/categoriesSlice";
+import { actGetCategories, cleanupCategoriesRecords } from "@store/categories/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useEffect } from "react";
 
@@ -12,10 +9,11 @@ const useCategories = () => {
   );
 
   useEffect(() => {
-    dispatch(actGetCategories());
+    const promise = dispatch(actGetCategories());
 
     return () => {
       dispatch(cleanupCategoriesRecords());
+      promise.abort();
     };
   }, [dispatch]);
 

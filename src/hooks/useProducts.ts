@@ -1,8 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  actGetProductsByCatPrefix,
-  cleanupProductsRecords,
-} from "@store/products/productsSlice";
+import { actGetProductsByCatPrefix, cleanupProductsRecords } from "@store/products/productsSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -23,10 +20,11 @@ const useProducts = () => {
   }));
 
   useEffect(() => {
-    dispatch(actGetProductsByCatPrefix(params.prefix as string));
+    const promise = dispatch(actGetProductsByCatPrefix(params.prefix as string));
 
     return () => {
       dispatch(cleanupProductsRecords());
+      promise.abort();
     };
   }, [dispatch, params]);
 

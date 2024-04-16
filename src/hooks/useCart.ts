@@ -1,9 +1,4 @@
-import {
-  actGetProductsByItem,
-  cartItemChangeQuantity,
-  cartItemRemove,
-  cleanupCartProductsFullInfo,
-} from "@store/cart/cartSlice";
+import { actGetProductsByItem, cartItemChangeQuantity, cartItemRemove, cleanupCartProductsFullInfo } from "@store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useCallback, useEffect } from "react";
 
@@ -33,10 +28,11 @@ const useCart = () => {
   );
 
   useEffect(() => {
-    dispatch(actGetProductsByItem());
+    const promise = dispatch(actGetProductsByItem());
 
     return () => {
       dispatch(cleanupCartProductsFullInfo());
+      promise.abort();
     };
   }, [dispatch]);
 

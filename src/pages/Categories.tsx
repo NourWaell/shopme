@@ -2,7 +2,7 @@ import { Category } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { GridList, Heading } from "@components/shared";
 import { TCategory } from "@customTypes/category";
-import { actGetCategories } from "@store/categories/categoriesSlice";
+import { actGetCategories, cleanupCategoriesRecords } from "@store/categories/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useEffect } from "react";
 
@@ -13,10 +13,12 @@ const Categories = () => {
   );
 
   useEffect(() => {
-    if (!records.length) {
-      dispatch(actGetCategories());
-    }
-  }, [dispatch, records]);
+    dispatch(actGetCategories());
+
+    return () => {
+      dispatch(cleanupCategoriesRecords());
+    };
+  }, [dispatch]);
 
   return (
     <>

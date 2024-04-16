@@ -5,7 +5,7 @@ import {
   actGetProductsByItem,
   cartItemChangeQuantity,
   cartItemRemove,
-  productsFullInfoCleanUp,
+  cleanupCartProductsFullInfo,
 } from "@store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useCallback, useEffect } from "react";
@@ -39,7 +39,7 @@ const Cart = () => {
     dispatch(actGetProductsByItem());
 
     return () => {
-      dispatch(productsFullInfoCleanUp());
+      dispatch(cleanupCartProductsFullInfo());
     };
   }, [dispatch]);
 

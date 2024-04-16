@@ -1,14 +1,10 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  actGetWishlist,
-  productsFullInfoCleanUp,
-} from "@store/wishlist/wishlistSlice";
-
-import { GridList, Heading } from "@components/shared";
 import { Product } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
+import { GridList, Heading } from "@components/shared";
 import { TProduct } from "@customTypes/product";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { actGetWishlist, cleanupWishlistProductsFullInfo } from "@store/wishlist/wishlistSlice";
+import { useEffect } from "react";
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +24,7 @@ const Wishlist = () => {
     dispatch(actGetWishlist());
 
     return () => {
-      dispatch(productsFullInfoCleanUp());
+      dispatch(cleanupWishlistProductsFullInfo());
     };
   }, [dispatch]);
 

@@ -1,28 +1,38 @@
+import { LottieHandler } from "@components/feedback";
 import { Col, Row } from "react-bootstrap";
 
 type TGridList<T> = {
   records: T[];
   renderItem: (record: T) => React.ReactNode;
+  emptyMessage: string;
 };
 
 type HasId = {
   id?: number;
 };
 
-const GridList = <T extends HasId>({ records, renderItem }: TGridList<T>) => {
+const GridList = <T extends HasId>({
+  records,
+  renderItem,
+  emptyMessage,
+}: TGridList<T>) => {
   const list =
-    records.length > 0
-      ? records.map((record) => (
-          <Col
-            key={record.id}
-            xs={6}
-            md={3}
-            className="d-flex justify-content-center mb-5 mt-2"
-          >
-            {renderItem(record)}
-          </Col>
-        ))
-      : "There are no data available.";
+    records.length > 0 ? (
+      records.map((record) => (
+        <Col
+          key={record.id}
+          xs={6}
+          md={3}
+          className="d-flex justify-content-center mb-5 mt-2"
+        >
+          {renderItem(record)}
+        </Col>
+      ))
+    ) : (
+      <Col>
+        <LottieHandler type="empty" message={emptyMessage} />
+      </Col>
+    );
 
   return <Row>{list}</Row>;
 };

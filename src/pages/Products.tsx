@@ -14,6 +14,7 @@ const Products = () => {
         <GridList
           records={productsFullInfo}
           renderItem={(record) => <Product {...record} />}
+          emptyMessage={`No ${productPrefix} products found.`}
         />
       </Loading>
     </>

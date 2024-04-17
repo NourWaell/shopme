@@ -1,11 +1,12 @@
-import { lazy, Suspense } from "react";
+import { PageSuspenseFallback } from "@components/feedback";
+import { MainLayout } from "@layouts/index";
+import Error from "@pages/Error";
+import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { MainLayout } from "@layouts/index";
 const AboutUs = lazy(() => import("@pages/AboutUs"));
 const Cart = lazy(() => import("@pages/Cart"));
 const Categories = lazy(() => import("@pages/Categories"));
-const Error = lazy(() => import("@pages/Error"));
 const Home = lazy(() => import("@pages/Home"));
 const Login = lazy(() => import("@pages/Login"));
 const Products = lazy(() => import("@pages/Products"));
@@ -21,41 +22,41 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Home />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "cart",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Cart />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "wishlist",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Wishlist />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "categories",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Categories />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "categories/products/:prefix",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Products />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
         loader: ({ params }) => {
           if (
@@ -73,25 +74,25 @@ const router = createBrowserRouter([
       {
         path: "about-us",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <AboutUs />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "login",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Login />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "register",
         element: (
-          <Suspense fallback="Loading...">
+          <PageSuspenseFallback>
             <Register />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
     ],

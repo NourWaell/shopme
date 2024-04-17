@@ -14,6 +14,7 @@ const Wishlist = () => {
         <GridList<TProduct>
           records={records}
           renderItem={(record) => <Product {...record} />}
+          emptyMessage="No products found in your wishlist."
         />
       </Loading>
     </>

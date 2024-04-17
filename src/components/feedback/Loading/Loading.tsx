@@ -1,5 +1,6 @@
 import { TLoading } from "@types";
 
+import LottieHandler from "../LottieHandler/LottieHandler";
 import CartSkeleton from "../skeletons/CartSkeleton/CartSkeleton";
 import CategorySkeleton from "../skeletons/CategorySkeleton/CategorySkeleton";
 import ProductSkeleton from "../skeletons/ProductSkeleton/ProductSkeleton";
@@ -25,9 +26,13 @@ const Loading = ({ status, error, children, type = "category" }: ILoading) => {
   }
 
   if (status === "failed") {
-    return <p>{error}</p>;
+    return (
+      <div>
+        <LottieHandler type="error" message={error as string} />;
+      </div>
+    );
   }
 
-  return <>{children}</>;
+  return <div>{children}</div>;
 };
 export default Loading;

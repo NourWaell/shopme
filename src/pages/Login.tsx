@@ -1,17 +1,19 @@
 import { Input } from "@components/Form";
 import { Heading } from "@components/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { actAuthLogin } from "@store/auth/authSlice";
-import { useAppDispatch } from "@store/hooks";
+import { actAuthLogin, resetUI } from "@store/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { signInSchema, signInType } from "@validations/signInSchema";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { useEffect } from "react";
+import { Alert, Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Login = () => {
-  const [searchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
+  const [searchParams, setSearchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { error, loading } = useAppSelector((state) => state.auth);
 
   const {
     register,
@@ -23,10 +25,21 @@ const Login = () => {
   });
 
   const submitForm: SubmitHandler<signInType> = async (data) => {
+    if (searchParams.get("message")) {
+      setSearchParams("");
+    }
+
     dispatch(actAuthLogin(data))
       .unwrap()
       .then(() => navigate("/"));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUI());
+    };
+  }, [dispatch]);
+
   return (
     <>
       <Heading title="User Login" />
@@ -53,8 +66,15 @@ const Login = () => {
               error={errors.password?.message as string}
             />
             <Button variant="info" type="submit" style={{ color: "white" }}>
-              Login
+              {loading === "pending" ? (
+                <>
+                  <Spinner animation="border" size="sm" /> Loading...
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
+            {error && <p className="text-danger mt-2">{error}</p>}
           </Form>
         </Col>
       </Row>

@@ -2,9 +2,10 @@ import { Input } from "@components/Form";
 import { Heading } from "@components/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCheckEmailAvailability from "@hooks/useCheckEmailAvailability";
-import { actAuthRegister } from "@store/auth/authSlice";
+import { actAuthRegister, resetUI } from "@store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { signUpSchema, signUpTypes } from "@validations/signUpSchema";
+import { useEffect } from "react";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -52,6 +53,12 @@ const Register = () => {
       .unwrap()
       .then(() => navigate("/login?message=account_created")); // unwrap is used here to make sure that the promise is resolved before navigating to the login page
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUI());
+    };
+  }, [dispatch]);
 
   return (
     <>

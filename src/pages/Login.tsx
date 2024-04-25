@@ -7,13 +7,13 @@ import { signInSchema, signInType } from "@validations/signInSchema";
 import { useEffect } from "react";
 import { Alert, Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 const Login = () => {
   const [searchParams, setSearchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state) => state.auth);
+  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
 
   const {
     register,
@@ -39,6 +39,10 @@ const Login = () => {
       dispatch(resetUI());
     };
   }, [dispatch]);
+
+  if (accessToken) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>

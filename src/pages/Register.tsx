@@ -1,64 +1,21 @@
 import { Input } from "@components/Form";
 import { Heading } from "@components/shared";
-import { zodResolver } from "@hookform/resolvers/zod";
-import useCheckEmailAvailability from "@hooks/useCheckEmailAvailability";
-import { actAuthRegister, resetUI } from "@store/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { signUpSchema, signUpTypes } from "@validations/signUpSchema";
-import { useEffect } from "react";
+import { useRegister } from "@hooks/useRegister";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
-  const dispatch = useAppDispatch();
-  const { loading, error, accessToken } = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
-
   const {
+    submitForm,
     register,
+    accessToken,
     handleSubmit,
-    getFieldState,
-    trigger,
-    formState: { errors },
-  } = useForm<signUpTypes>({
-    mode: "onBlur",
-    resolver: zodResolver(signUpSchema),
-  });
-
-  const {
-    checkEmailAvailability,
+    formErrors,
+    error,
+    loading,
+    emailOnBlurHandler,
     emailAvailabilityStatus,
-    enteredEmail,
-    resetCheckEmailAvailability,
-  } = useCheckEmailAvailability();
-
-  const emailOnBlurHandler = async (e: React.FocusEvent<HTMLInputElement>) => {
-    await trigger("email");
-    const value = e.target.value;
-    const { isDirty, invalid } = getFieldState("email");
-
-    if (isDirty && !invalid && enteredEmail !== value) {
-      checkEmailAvailability(value);
-    }
-
-    if (isDirty && invalid && enteredEmail) {
-      resetCheckEmailAvailability();
-    }
-  };
-
-  const submitForm: SubmitHandler<signUpTypes> = async (data) => {
-    const { firstName, lastName, email, password } = data;
-    dispatch(actAuthRegister({ firstName, lastName, email, password }))
-      .unwrap()
-      .then(() => navigate("/login?message=account_created")); // unwrap is used here to make sure that the promise is resolved before navigating to the login page
-  };
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetUI());
-    };
-  }, [dispatch]);
+  } = useRegister();
 
   if (accessToken) {
     return <Navigate to="/" />;
@@ -74,14 +31,14 @@ const Register = () => {
               label="First Name"
               name="firstName"
               register={register}
-              error={errors.firstName?.message as string}
+              error={formErrors.firstName?.message as string}
             />
 
             <Input
               label="Last Name"
               name="lastName"
               register={register}
-              error={errors.lastName?.message as string}
+              error={formErrors.lastName?.message as string}
             />
 
             <Input
@@ -90,8 +47,8 @@ const Register = () => {
               register={register}
               onBlur={emailOnBlurHandler}
               error={
-                errors.email?.message
-                  ? errors.email?.message
+                formErrors.email?.message
+                  ? formErrors.email?.message
                   : emailAvailabilityStatus === "notAvailable"
                   ? "This email is already in use."
                   : emailAvailabilityStatus === "failed"
@@ -116,7 +73,7 @@ const Register = () => {
               name="password"
               type="password"
               register={register}
-              error={errors.password?.message as string}
+              error={formErrors.password?.message as string}
             />
 
             <Input
@@ -124,7 +81,7 @@ const Register = () => {
               name="confirmPassword"
               type="password"
               register={register}
-              error={errors.confirmPassword?.message as string}
+              error={formErrors.confirmPassword?.message as string}
             />
 
             <Button

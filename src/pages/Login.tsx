@@ -1,44 +1,20 @@
 import { Input } from "@components/Form";
 import { Heading } from "@components/shared";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { actAuthLogin, resetUI } from "@store/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { signInSchema, signInType } from "@validations/signInSchema";
-import { useEffect } from "react";
+import { useLogin } from "@hooks/useLogin";
 import { Alert, Button, Col, Form, Row, Spinner } from "react-bootstrap";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
-  const [searchParams, setSearchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
-
   const {
+    submitForm,
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<signInType>({
-    mode: "onBlur",
-    resolver: zodResolver(signInSchema),
-  });
-
-  const submitForm: SubmitHandler<signInType> = async (data) => {
-    if (searchParams.get("message")) {
-      setSearchParams("");
-    }
-
-    dispatch(actAuthLogin(data))
-      .unwrap()
-      .then(() => navigate("/"));
-  };
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetUI());
-    };
-  }, [dispatch]);
+    formErrors,
+    error,
+    loading,
+    accessToken,
+    searchParams,
+  } = useLogin();
 
   if (accessToken) {
     return <Navigate to="/" />;
@@ -60,14 +36,14 @@ const Login = () => {
               name="email"
               label="Email Address"
               register={register}
-              error={errors.email?.message as string}
+              error={formErrors.email?.message as string}
             />
             <Input
               type="password"
               name="password"
               label="Password"
               register={register}
-              error={errors.password?.message as string}
+              error={formErrors.password?.message as string}
             />
             <Button variant="info" type="submit" style={{ color: "white" }}>
               {loading === "pending" ? (

@@ -1,11 +1,14 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Input } from "@components/Form";
+import { Heading } from "@components/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, signInType } from "@validations/signInSchema";
-import { Heading } from "@components/shared";
-import { Input } from "@components/Form";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 
 const Login = () => {
+  const [searchParams, setSearchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
+
   const {
     register,
     handleSubmit,
@@ -23,6 +26,12 @@ const Login = () => {
       <Heading title="User Login" />
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
+          {searchParams.get("message") && (
+            <Alert variant="success">
+              Your account was created, please login.
+            </Alert>
+          )}
+
           <Form onSubmit={handleSubmit(submitForm)}>
             <Input
               name="email"

@@ -2,11 +2,18 @@ import { Input } from "@components/Form";
 import { Heading } from "@components/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCheckEmailAvailability from "@hooks/useCheckEmailAvailability";
+import { actAuthRegister } from "@store/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { signUpSchema, signUpTypes } from "@validations/signUpSchema";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -39,8 +46,11 @@ const Register = () => {
     }
   };
 
-  const submitForm: SubmitHandler<signUpTypes> = (data) => {
-    console.log(data);
+  const submitForm: SubmitHandler<signUpTypes> = async (data) => {
+    const { firstName, lastName, email, password } = data;
+    dispatch(actAuthRegister({ firstName, lastName, email, password }))
+      .unwrap()
+      .then(() => navigate("/login?message=account_created")); // unwrap is used here to make sure that the promise is resolved before navigating to the login page
   };
 
   return (
@@ -110,10 +120,21 @@ const Register = () => {
               variant="info"
               type="submit"
               style={{ color: "white" }}
-              disabled={emailAvailabilityStatus === "checking" ? true : false}
+              disabled={
+                emailAvailabilityStatus === "checking"
+                  ? true
+                  : false || loading === "pending"
+              }
             >
-              Submit
+              {loading === "pending" ? (
+                <>
+                  <Spinner animation="border" size="sm" /> Loading...
+                </>
+              ) : (
+                "Register"
+              )}
             </Button>
+            {error && <p className="text-danger mt-2">{error}</p>}
           </Form>
         </Col>
       </Row>

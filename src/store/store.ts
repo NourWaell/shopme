@@ -1,20 +1,21 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
+import auth from "./auth/authSlice";
 import cart from "./cart/cartSlice";
 import categories from "./categories/categoriesSlice";
 import products from "./products/productsSlice";
 import wishlist from "./wishlist/wishlistSlice";
-import storage from "redux-persist/lib/storage";
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
 
 const cartPersistConfig = {
   key: "cart",
@@ -29,6 +30,7 @@ const wishlistPersistConfig = {
 };
 
 const rootReducer = combineReducers({
+  auth,
   categories,
   products,
   cart: persistReducer(cartPersistConfig, cart),

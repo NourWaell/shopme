@@ -1,5 +1,5 @@
-import { TProduct, TLoading, isString } from "@types";
 import { createSlice } from "@reduxjs/toolkit";
+import { isString, TLoading, TProduct } from "@types";
 
 import actGetProductsByCatPrefix from "./act/actGetProductsByCatPrefix";
 

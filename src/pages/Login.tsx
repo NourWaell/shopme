@@ -1,13 +1,17 @@
 import { Input } from "@components/Form";
 import { Heading } from "@components/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { actAuthLogin } from "@store/auth/authSlice";
+import { useAppDispatch } from "@store/hooks";
 import { signInSchema, signInType } from "@validations/signInSchema";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Login = () => {
-  const [searchParams, setSearchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
+  const [searchParams] = useSearchParams(); // could use a toaster instead but was practicing with the URL
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -18,8 +22,10 @@ const Login = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const submitForm: SubmitHandler<signInType> = (data) => {
-    console.log(data);
+  const submitForm: SubmitHandler<signInType> = async (data) => {
+    dispatch(actAuthLogin(data))
+      .unwrap()
+      .then(() => navigate("/"));
   };
   return (
     <>
@@ -47,7 +53,7 @@ const Login = () => {
               error={errors.password?.message as string}
             />
             <Button variant="info" type="submit" style={{ color: "white" }}>
-              Submit
+              Login
             </Button>
           </Form>
         </Col>

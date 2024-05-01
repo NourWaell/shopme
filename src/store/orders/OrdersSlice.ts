@@ -21,6 +21,7 @@ const orderSlice = createSlice({
   reducers: {
     resetOrderState: (state) => {
       state.loading = "idle";
+      state.error = null;
     },
   },
   extraReducers: (builder) => {

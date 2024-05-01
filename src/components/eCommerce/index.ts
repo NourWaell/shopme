@@ -5,6 +5,7 @@ import Category from "./Category/Category";
 import HeaderBasket from "./HeaderBasket/HeaderBasket";
 import HeaderWishlist from "./HeaderWishlist/HeaderWishlist";
 import Product from "./Product/Product";
+import ProductInfo from "./ProductInfo/ProductInfo";
 
 export {
   HeaderBasket,
@@ -14,4 +15,5 @@ export {
   CartItem,
   CartSubtotal,
   CartItemList,
+  ProductInfo,
 };

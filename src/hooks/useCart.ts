@@ -5,6 +5,7 @@ import {
   cleanupCartProductsFullInfo,
 } from "@store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { resetOrderState } from "@store/orders/OrdersSlice";
 import { useCallback, useEffect } from "react";
 
 const useCart = () => {
@@ -15,6 +16,8 @@ const useCart = () => {
   );
 
   const userAccessToken = useAppSelector((state) => state.auth.accessToken);
+
+  const placeOrderStatus = useAppSelector((state) => state.orders.loading);
 
   const products = productsFullInfo.map((el) => ({
     ...el,
@@ -40,6 +43,7 @@ const useCart = () => {
 
     return () => {
       dispatch(cleanupCartProductsFullInfo());
+      dispatch(resetOrderState());
       promise.abort();
     };
   }, [dispatch]);
@@ -51,6 +55,7 @@ const useCart = () => {
     userAccessToken,
     removeItemHandler,
     changeQuantityHandler,
+    placeOrderStatus,
   };
 };
 export default useCart;

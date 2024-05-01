@@ -11,6 +11,7 @@ const Cart = () => {
     loading,
     products,
     userAccessToken,
+    placeOrderStatus,
   } = useCart();
 
   return (
@@ -29,6 +30,11 @@ const Cart = () => {
               userAccessToken={userAccessToken}
             />
           </>
+        ) : placeOrderStatus === "succeeded" ? (
+          <LottieHandler
+            type="success"
+            message="Your order has been placed successfully"
+          />
         ) : (
           <LottieHandler type="empty" message="Your cart is empty" />
         )}

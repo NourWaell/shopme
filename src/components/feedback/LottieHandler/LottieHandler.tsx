@@ -2,6 +2,7 @@ import empty from "@assets/lottieFiles/empty.json";
 import error from "@assets/lottieFiles/error.json";
 import loading from "@assets/lottieFiles/loading.json";
 import notFound from "@assets/lottieFiles/notFound.json";
+import success from "@assets/lottieFiles/success.json";
 import Lottie from "lottie-react";
 
 const lottieFilesMap = {
@@ -9,6 +10,7 @@ const lottieFilesMap = {
   empty,
   loading,
   error,
+  success,
 };
 
 type TLottieHandler = {

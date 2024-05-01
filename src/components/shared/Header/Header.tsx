@@ -16,7 +16,7 @@ const Header = () => {
 
   useEffect(() => {
     if (accessToken) {
-      dispatch(actGetWishlist("productsIds"));
+      dispatch(actGetWishlist("ProductIds"));
     }
   }, [dispatch, accessToken]);
 
@@ -68,10 +68,10 @@ const Header = () => {
                     title={`Welcome, ${user?.firstName}`}
                     id="nav-dropdown"
                   >
-                    <NavDropdown.Item as={NavLink} to="/profile">
+                    <NavDropdown.Item as={NavLink} to="profile" end>
                       Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item as={NavLink} to="/orders">
+                    <NavDropdown.Item as={NavLink} to="profile/orders">
                       Orders
                     </NavDropdown.Item>
                     <NavDropdown.Divider />

@@ -1,17 +1,24 @@
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import {
   actGetWishlist,
-  cleanupWishlistProductsFullInfo,
+  cleanWishlistProductsFullInfo,
 } from "@store/wishlist/wishlistSlice";
-import { useEffect } from "react";
 
 const useWishlist = () => {
   const dispatch = useAppDispatch();
-
   const { loading, error, productsFullInfo } = useAppSelector(
     (state) => state.wishlist
   );
   const cartItems = useAppSelector((state) => state.cart.items);
+
+  useEffect(() => {
+    const promise = dispatch(actGetWishlist("productsFullInfo"));
+    return () => {
+      promise.abort();
+      dispatch(cleanWishlistProductsFullInfo());
+    };
+  }, [dispatch]);
 
   const records = productsFullInfo.map((el) => ({
     ...el,
@@ -20,15 +27,7 @@ const useWishlist = () => {
     isAuthenticated: true,
   }));
 
-  useEffect(() => {
-    const promise = dispatch(actGetWishlist("productsFullInfo"));
-
-    return () => {
-      dispatch(cleanupWishlistProductsFullInfo());
-      promise.abort();
-    };
-  }, [dispatch]);
-
-  return { error, loading, records };
+  return { records, loading, error };
 };
+
 export default useWishlist;

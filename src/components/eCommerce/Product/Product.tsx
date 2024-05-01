@@ -1,15 +1,16 @@
-import LikeFill from "@assets/svg/like-fill.svg?react";
-import Like from "@assets/svg/like.svg?react";
+import { memo, useEffect, useState } from "react";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
 import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 import { TProduct } from "@types";
-import { memo, useEffect, useState } from "react";
+import ProductInfo from "../ProductInfo/ProductInfo";
 import { Button, Modal, Spinner } from "react-bootstrap";
+import LikeFill from "@assets/svg/like-fill.svg?react";
+import Like from "@assets/svg/like.svg?react";
 
 import styles from "./styles.module.css";
 
-const { product, productImg, maximumNotice, wishlistBtn } = styles;
+const { maximumNotice, wishlistBtn } = styles;
 
 const Product = memo(
   ({
@@ -71,7 +72,7 @@ const Product = memo(
           </Modal.Body>
         </Modal>
 
-        <div className={product}>
+        <ProductInfo title={title} price={price} img={img}>
           <div className={wishlistBtn} onClick={likeToggleHandler}>
             {isLoading ? (
               <Spinner animation="border" size="sm" variant="primary" />
@@ -81,19 +82,16 @@ const Product = memo(
               <Like />
             )}
           </div>
-          <div className={productImg}>
-            <img src={img} alt={title} />
-          </div>
-          <h2 title={title}>{title}</h2>
-          <h3>{price} EGP</h3>
+
           {quantityReachedToMax && (
             <p className={maximumNotice}>
               You can't add more items of this item
             </p>
           )}
+
           <Button
             variant="info"
-            style={{ color: "white" }}
+            style={{ color: "white", width: "100%" }}
             onClick={addToCartHandler}
             disabled={isBtnDisabled || quantityReachedToMax}
           >
@@ -105,7 +103,7 @@ const Product = memo(
               "Add to Cart"
             )}
           </Button>
-        </div>
+        </ProductInfo>
       </>
     );
   }

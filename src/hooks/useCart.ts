@@ -1,12 +1,20 @@
-import { actGetProductsByItem, cartItemChangeQuantity, cartItemRemove, cleanupCartProductsFullInfo } from "@store/cart/cartSlice";
+import {
+  actGetProductsByItem,
+  cartItemChangeQuantity,
+  cartItemRemove,
+  cleanupCartProductsFullInfo,
+} from "@store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useCallback, useEffect } from "react";
 
 const useCart = () => {
   const dispatch = useAppDispatch();
+
   const { items, productsFullInfo, loading, error } = useAppSelector(
     (state) => state.cart
   );
+
+  const userAccessToken = useAppSelector((state) => state.auth.accessToken);
 
   const products = productsFullInfo.map((el) => ({
     ...el,
@@ -36,6 +44,13 @@ const useCart = () => {
     };
   }, [dispatch]);
 
-  return { error, loading, products, removeItemHandler, changeQuantityHandler };
+  return {
+    error,
+    loading,
+    products,
+    userAccessToken,
+    removeItemHandler,
+    changeQuantityHandler,
+  };
 };
 export default useCart;

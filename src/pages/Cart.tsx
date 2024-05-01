@@ -4,8 +4,14 @@ import { Heading } from "@components/shared";
 import useCart from "@hooks/useCart";
 
 const Cart = () => {
-  const { changeQuantityHandler, removeItemHandler, error, loading, products } =
-    useCart();
+  const {
+    changeQuantityHandler,
+    removeItemHandler,
+    error,
+    loading,
+    products,
+    userAccessToken,
+  } = useCart();
 
   return (
     <>
@@ -18,7 +24,10 @@ const Cart = () => {
               changeQuantityHandler={changeQuantityHandler}
               removeItemHandler={removeItemHandler}
             />
-            <CartSubtotal products={products} />
+            <CartSubtotal
+              products={products}
+              userAccessToken={userAccessToken}
+            />
           </>
         ) : (
           <LottieHandler type="empty" message="Your cart is empty" />

@@ -12,6 +12,7 @@ const actGetWishlist = createAsyncThunk(
   async (dataType: TDataType, thunkAPI) => {
     const { rejectWithValue, signal, getState } = thunkAPI;
     const { auth } = getState() as RootState;
+
     try {
       const userWishlist = await axios.get<{ productId: number }[]>(
         `/wishlist?userId=${auth.user?.id}`,
